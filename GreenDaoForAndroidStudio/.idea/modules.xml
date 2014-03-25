@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/DaoExample/DaoExample.iml" filepath="$PROJECT_DIR$/DaoExample/DaoExample.iml" />
+      <module fileurl="file://$PROJECT_DIR$/GreenDaoForAndroidStudio.iml" filepath="$PROJECT_DIR$/GreenDaoForAndroidStudio.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MyDaoGenerator/MyDaoGenerator.iml" filepath="$PROJECT_DIR$/MyDaoGenerator/MyDaoGenerator.iml" />
+    </modules>
+  </component>
+</project>
+
