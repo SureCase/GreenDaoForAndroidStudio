@@ -1,12 +1,19 @@
 package pl.surecase.eu.greendaoexample.ui.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import greendao.Box;
 import pl.surecase.co.greendaoexample.daoexample.R;
 import pl.surecase.eu.greendaoexample.backend.repositories.BoxRepository;
 import pl.surecase.eu.greendaoexample.ui.adapter.DbItemsAdapter;
@@ -15,8 +22,6 @@ public class BoxListActivity extends Activity {
 
     private ListView lvItemList;
     private DbItemsAdapter boxAdapter;
-    private Button btnAddItem;
-    private Button btnClearItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,67 +29,20 @@ public class BoxListActivity extends Activity {
         setContentView(R.layout.activity_box_list);
 
         lvItemList = (ListView) this.findViewById(R.id.lvItemList);
-        btnAddItem = (Button) this.findViewById(R.id.btnAddItem);
-        btnClearItems = (Button) this.findViewById(R.id.btnClearItems);
+        boxAdapter = new DbItemsAdapter(BoxListActivity.this);
+        lvItemList.setAdapter(boxAdapter);
 
-        setupListView();
         setupButtons();
     }
 
-    private void setupListView() {
-        boxAdapter = new DbItemsAdapter(BoxListActivity.this);
-        lvItemList.setAdapter(boxAdapter);
-    }
-
     private void setupButtons() {
-        btnAddItem.setOnClickListener(new View.OnClickListener() {
+        lvItemList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View v) {
-                Intent addBoxActivityIntent = new Intent(BoxListActivity.this, AddBoxActivity.class);
-                startActivity(addBoxActivityIntent);
-            }
-        });
-
-        btnClearItems.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                BoxRepository.clearBoxes(BoxListActivity.this);
-                boxAdapter.addDataAndRefresh(BoxRepository.getAllBoxes(BoxListActivity.this));
-            }
-        });
-
-        boxAdapter.setOnDeleteItemClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (v.getTag(R.id.tag_item_id) != null) {
-                    long itemId = (Long) v.getTag(R.id.tag_item_id);
-                    BoxRepository.deleteBoxWithId(BoxListActivity.this, itemId);
-                    boxAdapter.addDataAndRefresh(BoxRepository.getAllBoxes(BoxListActivity.this));
-                }
-            }
-        });
-
-        boxAdapter.setOnEditItemClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent editItemIntent = new Intent(BoxListActivity.this, EditBoxActivity.class);
 
-                if (v.getTag(R.id.tag_item_id) != null) {
-                    long itemId = (Long) v.getTag(R.id.tag_item_id);
-                    editItemIntent.putExtra("itemId", itemId);
-                }
-                if (v.getTag(R.id.tag_box_name) != null) {
-                    String boxName = (String) v.getTag(R.id.tag_box_name);
-                    editItemIntent.putExtra("boxName", boxName);
-                }
-                if (v.getTag(R.id.tag_box_size) != null) {
-                    int boxSize = (Integer) v.getTag(R.id.tag_box_size);
-                    editItemIntent.putExtra("boxSize", boxSize);
-                }
-                if (v.getTag(R.id.tag_box_description) != null) {
-                    String boxDescription = (String) v.getTag(R.id.tag_box_description);
-                    editItemIntent.putExtra("boxDescription", boxDescription);
-                }
+                Box clickedBox = boxAdapter.getItem(position);
+                editItemIntent.putExtra("boxId", clickedBox.getId());
 
                 startActivity(editItemIntent);
             }
@@ -94,7 +52,57 @@ public class BoxListActivity extends Activity {
     @Override
     protected void onStart() {
         super.onStart();
-        boxAdapter.addDataAndRefresh(BoxRepository.getAllBoxes(BoxListActivity.this));
+        boxAdapter.updateData(BoxRepository.getAllBoxes(BoxListActivity.this));
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.box_list_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.add_item:
+                createItem();
+                return true;
+
+            case R.id.delete_items:
+                clearAllItems();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void createItem() {
+        Intent addBoxActivityIntent = new Intent(BoxListActivity.this, EditBoxActivity.class);
+        startActivity(addBoxActivityIntent);
+    }
+
+    private void clearAllItems() {
+        if (boxAdapter.getCount() == 0) {
+            Toast.makeText(BoxListActivity.this, getString(R.string.toast_no_items_to_delete), Toast.LENGTH_SHORT).show();
+        } else {
+            new AlertDialog.Builder(BoxListActivity.this)
+                    .setTitle(getString(R.string.dialog_delete_items_title))
+                    .setMessage(R.string.dialog_delete_items_content)
+                    .setCancelable(false)
+                    .setPositiveButton(R.string.dialog_delete_items_confirm, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            BoxRepository.clearBoxes(BoxListActivity.this);
+                            boxAdapter.updateData(BoxRepository.getAllBoxes(BoxListActivity.this));
+                            dialog.cancel();
+                        }
+                    })
+                    .setNegativeButton(R.string.dialog_delete_items_cancel, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    }).create().show();
+        }
+    }
 }

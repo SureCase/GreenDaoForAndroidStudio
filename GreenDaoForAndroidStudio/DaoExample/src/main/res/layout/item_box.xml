@@ -1,139 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/boxItem"
-    android:layout_height="wrap_content"
     android:layout_width="match_parent"
-    android:orientation="vertical">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="8dp">
 
-    <ImageButton
-        android:id="@+id/ibDeleteItem"
+    <TextView
+        android:id="@+id/tvItemId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_cancel"
-        android:background="@null"
-        android:layout_marginRight="3dp"
-        android:layout_alignParentRight="true"
-        android:layout_above="@+id/vLine"/>
-
-    <ImageButton
-        android:id="@+id/ibEdit"
-        android:layout_width="26dp"
-        android:layout_height="26dp"
-        android:src="@drawable/ic_edit"
-        android:background="@null"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="2dp"
-        android:layout_toLeftOf="@id/ibDeleteItem"
-        android:layout_above="@+id/vLine"
-        android:scaleType="centerInside"/>
-
-    <LinearLayout
-        android:id="@+id/lvHeader"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="12dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="Item no. "/>
-
-        <TextView
-            android:id="@+id/tvItemId"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textSize="15sp"/>
-
-    </LinearLayout>
+        android:text="---"
+        android:textSize="15sp"
+        android:textStyle="bold" />
 
     <View
         android:id="@+id/vLine"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#999999"
-        android:layout_below="@id/lvHeader"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"/>
+        android:layout_marginBottom="4dp"
+        android:layout_marginTop="4dp"
+        android:background="#999999" />
 
-    <LinearLayout
-        android:id="@+id/lvName"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="5dp"
-        android:layout_below="@+id/lvHeader">
+        android:text="---" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
-            android:layout_marginLeft="9dp"
-            android:text="Box name: "/>
-
-        <TextView
-            android:id="@+id/tvName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/lvSize"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/tvSize"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="5dp"
-        android:layout_below="@+id/lvName">
+        android:text="---" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
-            android:layout_marginLeft="19dp"
-            android:text="Box size: "/>
-
-        <TextView
-            android:id="@+id/tvSize"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:id="@+id/lvDescription"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/tvDescription"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="5dp"
-        android:layout_below="@+id/lvSize">
+        android:text="---" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
-            android:text="Description: "/>
-
-        <TextView
-            android:id="@+id/tvDescription"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:layout_below="@+id/lvDescription"/>
-</RelativeLayout>
+</LinearLayout>

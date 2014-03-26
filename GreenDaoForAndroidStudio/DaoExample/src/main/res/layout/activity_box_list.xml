@@ -4,34 +4,10 @@
     android:layout_height="match_parent"
     tools:context="pl.surecase.eu.greendaoexample.ui.activity.BoxListActivity">
 
-    <LinearLayout
-        android:id="@+id/lvButtonContainer"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/btnAddItem"
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="Add item"/>
-
-        <Button
-            android:id="@+id/btnClearItems"
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="Clear items"/>
-
-    </LinearLayout>
-
     <ListView
         android:id="@+id/lvItemList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/lvButtonContainer"
-        android:divider="@null">
-     </ListView>
+        android:divider="@null" />
 
 </RelativeLayout>

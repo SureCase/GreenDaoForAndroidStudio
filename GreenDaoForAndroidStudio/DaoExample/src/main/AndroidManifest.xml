@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="pl.surecase.co.greendaoexample.daoexample" >
+    package="pl.surecase.co.greendaoexample.daoexample">
 
     <application
         android:name="pl.surecase.eu.greendaoexample.DaoExampleApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
-        <activity
-            android:name="pl.surecase.eu.greendaoexample.ui.activity.BoxListActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait">
+        android:screenOrientation="portrait"
+        android:theme="@style/AppTheme">
+
+        <activity android:name="pl.surecase.eu.greendaoexample.ui.activity.BoxListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,15 +18,7 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name="pl.surecase.eu.greendaoexample.ui.activity.AddBoxActivity"
-            android:screenOrientation="portrait">
-        </activity>
-
-        <activity
-            android:name="pl.surecase.eu.greendaoexample.ui.activity.EditBoxActivity"
-            android:screenOrientation="portrait">
-        </activity>
+        <activity android:name="pl.surecase.eu.greendaoexample.ui.activity.EditBoxActivity" />
 
     </application>
 

@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -21,8 +22,6 @@ public class DbItemsAdapter extends ArrayAdapter<Box> {
 
     private LayoutInflater inflater;
     private Context context;
-    private View.OnClickListener onDeleteItemButtonClick;
-    private View.OnClickListener onEditItemButtonClick;
 
     public DbItemsAdapter(Context context) {
         super(context, 0);
@@ -30,10 +29,10 @@ public class DbItemsAdapter extends ArrayAdapter<Box> {
         this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
-    public void addDataAndRefresh(List<Box> boxList) {
+    public void updateData(List<Box> boxList) {
         this.clear();
-        for (int i=0; i<boxList.size(); i++) {
-            add(boxList.get(i));
+        for (Box aBoxList : boxList) {
+            add(aBoxList);
         }
         notifyDataSetChanged();
     }
@@ -43,22 +42,19 @@ public class DbItemsAdapter extends ArrayAdapter<Box> {
         final ViewHolder viewHolder;
 
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.item_box,null);
+            convertView = inflater.inflate(R.layout.item_box, null);
             viewHolder = new ViewHolder();
-            viewHolder.root = (RelativeLayout) convertView.findViewById(R.id.boxItem);
+            viewHolder.root = (LinearLayout) convertView.findViewById(R.id.boxItem);
             viewHolder.tvId = (TextView) convertView.findViewById(R.id.tvItemId);
             viewHolder.tvName = (TextView) convertView.findViewById(R.id.tvName);
             viewHolder.tvSize = (TextView) convertView.findViewById(R.id.tvSize);
             viewHolder.tvDescription = (TextView) convertView.findViewById(R.id.tvDescription);
-            viewHolder.ibDeleteItem = (ImageButton) convertView.findViewById(R.id.ibDeleteItem);
-            viewHolder.ibEdit = (ImageButton) convertView.findViewById(R.id.ibEdit);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         editBackground(position, viewHolder);
         fillViewWithData(position, viewHolder);
-        setupButtons(position, viewHolder);
 
         return convertView;
     }
@@ -72,38 +68,17 @@ public class DbItemsAdapter extends ArrayAdapter<Box> {
     }
 
     private void fillViewWithData(int position, ViewHolder viewHolder) {
-        viewHolder.tvId.setText(Long.toString(getItem(position).getId()));
-        viewHolder.tvName.setText(getItem(position).getName());
-        viewHolder.tvSize.setText(Integer.toString(getItem(position).getSlots()));
-        viewHolder.tvDescription.setText(getItem(position).getDescription());
-    }
-
-    private void setupButtons(int position, ViewHolder viewHolder) {
-        viewHolder.ibDeleteItem.setOnClickListener(onDeleteItemButtonClick);
-        viewHolder.ibEdit.setOnClickListener(onEditItemButtonClick);
-
-        viewHolder.ibDeleteItem.setTag(R.id.tag_item_id, getItem(position).getId());
-        viewHolder.ibEdit.setTag(R.id.tag_item_id, getItem(position).getId());
-        viewHolder.ibEdit.setTag(R.id.tag_box_name, getItem(position).getName());
-        viewHolder.ibEdit.setTag(R.id.tag_box_size, getItem(position).getSlots());
-        viewHolder.ibEdit.setTag(R.id.tag_box_description, getItem(position).getDescription());
+        viewHolder.tvId.setText(context.getString(R.string.tv_label_item_id) + " " + getItem(position).getId().toString());
+        viewHolder.tvName.setText(context.getString(R.string.tv_label_box_name) + " " + getItem(position).getName());
+        viewHolder.tvSize.setText(context.getString(R.string.tv_label_box_size) + " " + getItem(position).getSlots());
+        viewHolder.tvDescription.setText(context.getString(R.string.tv_label_box_description) + " " + getItem(position).getDescription());
     }
 
     static class ViewHolder {
-        RelativeLayout root;
+        LinearLayout root;
         TextView tvId;
         TextView tvName;
         TextView tvSize;
         TextView tvDescription;
-        ImageButton ibDeleteItem;
-        ImageButton ibEdit;
-    }
-
-    public void setOnDeleteItemClickListener(View.OnClickListener listener) {
-        this.onDeleteItemButtonClick = listener;
-    }
-
-    public void setOnEditItemClickListener(View.OnClickListener listener) {
-        this.onEditItemButtonClick = listener;
     }
 }
