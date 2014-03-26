@@ -60,7 +60,7 @@ After pointing output path of your database files and creating your database cod
 - Pick MyDaoGenerator from the Gradle project tree.
 - Chose <b>run</b> task.
 
-![gradleRun](https://github.com/FisherHUB/GreenDaoForAndroidStudio/blob/master/Screenshots/gradleRun.png?raw=true)
+![gradleRun](https://github.com/SureCase/GreenDaoForAndroidStudio/blob/master/Screenshots/gradleRun.png?raw=true)
 
 - Module has created files accordingly to content of MyDaoGenerator.class and in directory specified in `outputDir` parameter.
 
