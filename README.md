@@ -77,3 +77,6 @@ or:
              compile 'de.greenrobot:greendao:1.3.7'
         }
 
+The best Part of learning something or mastering something is doing by yourself. Having any errors or any problem copy and paste that error on google and solve by yourself.
+Once doing that you will get a satisfaction and motivation again.
+Happy developing.
